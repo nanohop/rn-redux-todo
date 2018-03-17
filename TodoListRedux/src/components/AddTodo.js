@@ -7,17 +7,26 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import { connect } from 'react-redux'
+
+import { addTodo } from '../actions/todos'
+
 import { Form, Item, Input, Button, Text as NBText } from 'native-base'
 
-export default class AddTodo extends Component {
+class AddTodo extends Component {
 
   state = {
     task: ''
   }
 
   onAdd = () => {
+    this.props.addTodo({
+      id: new Date().getTime(),
+      task: this.state.task,
+      completed: false
+    })
+
     const nav = this.props.navigation
-    nav.state.params.saveItem(this.state.task)
     nav.goBack()
   }
 
@@ -45,6 +54,8 @@ export default class AddTodo extends Component {
   }
 
 }
+
+export default connect(undefined, { addTodo })(AddTodo)
 
 const styles = StyleSheet.create({
   container: {

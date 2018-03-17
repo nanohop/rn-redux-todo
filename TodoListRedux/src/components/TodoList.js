@@ -46,24 +46,7 @@ class ToDoList extends Component {
   }
 
   addItem = () => {
-    // this.props.navigation.navigate(
-    //   'AddTodo',
-    //   { saveItem: this.saveItem }
-    // )
-
-
-    this.props.addTodo({
-      id: new Date().getTime(),
-      task: "New task from todo list",
-      completed: false
-    })
-  }
-
-  saveItem = newTask => {
-    items('POST', { task: newTask })
-    .then(json => {
-      this.setState({ items: json })
-    })
+    this.props.navigation.navigate('AddTodo')
   }
 
   updateTodo = (id, completed) => {
