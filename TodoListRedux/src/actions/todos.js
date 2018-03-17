@@ -3,7 +3,8 @@ import {
   SET_TODOS,
   TODOS_LOADING,
   TODOS_LOADED,
-  TODO_ERROR
+  TODO_ERROR,
+  TODO_VALIDATION_ERROR
 } from './types'
 
 import { items } from '../lib/api'
@@ -23,6 +24,13 @@ export const addTodo = (task) => {
 export const showError = (error) => {
   return {
     type: TODO_ERROR,
+    error
+  }
+}
+
+export const validationError = error => {
+  return {
+    type: 'TODO_VALIDATION_ERROR',
     error
   }
 }

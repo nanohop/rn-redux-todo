@@ -9,7 +9,7 @@ import {
 
 import { connect } from 'react-redux'
 
-import { addTodo } from '../actions/todos'
+import { addTodo, validationError } from '../actions/todos'
 
 import { Form, Item, Input, Button, Text as NBText } from 'native-base'
 
@@ -20,14 +20,33 @@ class AddTodo extends Component {
   }
 
   onAdd = () => {
-    this.props.addTodo(this.state.task)
-    this.props.navigation.goBack()
+    if(!this.state.task || this.state.task === '') {
+      this.props.validationError('Task cannot be blank')
+    } else {
+      this.props.addTodo(this.state.task)
+      this.props.navigation.goBack()      
+    }
   }
 
   render() {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="dark-content" />
+
+        {
+          this.props.validation_error && 
+          <View style={styles.error}>
+            <Text style={styles.errorText}>{this.props.validation_error}</Text>
+            <TouchableOpacity 
+              style={styles.errorButton}
+              onPress={() => {
+                this.props.validationError(null)
+              }}
+            >
+              <Text style={styles.errorText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        }
 
         <Form>
           <Item>
@@ -49,7 +68,16 @@ class AddTodo extends Component {
 
 }
 
-export default connect(undefined, { addTodo })(AddTodo)
+const mapStateToProps = (state) => {
+  return {
+    validation_error: state.todos.validation_error
+  }
+}
+
+export default connect(mapStateToProps, { 
+  addTodo,
+  validationError
+})(AddTodo)
 
 const styles = StyleSheet.create({
   container: {
@@ -60,6 +88,23 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: 'flex-end',
     marginTop: 20
+  },
+  error: {
+    padding: 10,
+    backgroundColor: '#ff0000',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  errorText: {
+    fontSize: 14,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  errorButton: {
+    padding: 5,
+    borderWidth: 1,
+    borderColor: '#fff'
   }
 })
 
