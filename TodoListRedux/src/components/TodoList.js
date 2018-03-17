@@ -7,7 +7,8 @@ import {
   StatusBar,
   ActivityIndicator,
   Image,
-  Platform
+  Platform,
+  TouchableOpacity
 } from 'react-native';
 
 import { connect } from 'react-redux'
@@ -22,7 +23,8 @@ import {
   addTodo, 
   loadTodos,
   toggleTodo,
-  deleteTodo
+  deleteTodo,
+  showError
 } from '../actions/todos'
 
 import { 
@@ -106,6 +108,25 @@ class ToDoList extends Component {
           </View>
 
           {
+            this.props.error && 
+            <View style={styles.error}>
+              <Text style={styles.errorText}>
+                {this.props.error}
+              </Text>
+              <TouchableOpacity
+                style={styles.errorButton}
+                onPress={() => {
+                  this.props.showError(null)
+                }}
+              >
+                <Text style={styles.errorText}>
+                  Close
+                </Text>
+              </TouchableOpacity>
+            </View>
+          }
+
+          {
             this.props.loading && <ActivityIndicator 
               size="large"
               color="#2288ee"
@@ -145,7 +166,8 @@ const mapStateToProps = (state) => {
     items: todoItems(state),
     completedItems: completedItems(state),
     uncompletedItems: uncompletedItems(state),
-    loading: state.todos.loading
+    loading: state.todos.loading,
+    error: state.todos.error
   }
 }
 
@@ -155,7 +177,8 @@ export default connect(
     addTodo, 
     loadTodos,
     toggleTodo,
-    deleteTodo
+    deleteTodo,
+    showError
   }
 )(ToDoList)
 
@@ -206,5 +229,22 @@ const styles = StyleSheet.create({
   icon: {
     height: 24,
     resizeMode: 'contain'
+  },
+  error: {
+    padding: 10,
+    backgroundColor: '#ff0000',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  errorText: {
+    fontSize: 14,
+    color: '#fff',
+    fontWeight: 'bold'
+  },
+  errorButton: {
+    padding: 5,
+    borderWidth: 1,
+    borderColor: '#fff'
   }
 });

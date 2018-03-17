@@ -2,7 +2,8 @@
 import { 
   SET_TODOS,
   TODOS_LOADING,
-  TODOS_LOADED
+  TODOS_LOADED,
+  TODO_ERROR
 } from './types'
 
 import { items } from '../lib/api'
@@ -13,6 +14,16 @@ export const addTodo = (task) => {
     .then(items => {
       dispatch(setTodos(items))
     })
+    .catch(error => {
+      dispatch(showError(error))
+    })
+  }
+}
+
+export const showError = (error) => {
+  return {
+    type: TODO_ERROR,
+    error
   }
 }
 

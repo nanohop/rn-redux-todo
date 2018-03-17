@@ -1,13 +1,15 @@
 const initialState = {
   items: [],
-  loading: false
+  loading: false,
+  error: null
 }
 
 import { 
   ADD_TODO, 
   SET_TODOS,
   TODOS_LOADING,
-  TODOS_LOADED
+  TODOS_LOADED,
+  TODO_ERROR
 } from '../actions/types'
 
 const todos = (state = initialState, action) => {
@@ -37,6 +39,12 @@ const todos = (state = initialState, action) => {
       return {
         ...state,
         loading: false
+      }
+
+    case TODO_ERROR:
+      return {
+        ...state,
+        error: action.error
       }
   }
 

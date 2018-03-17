@@ -13,5 +13,15 @@ export const items = (method, body) => {
     headers,
     body: JSON.stringify(body)
   })
-  .then(response => response.json())
+  .then(response => {
+    return new Promise((resolve, reject) => {
+      if(response.status < 400) {
+        resolve(response.json())
+      } else {
+        response.text().then(errorMessage => {
+          reject(errorMessage)
+        })
+      }
+    })
+  })
 }
