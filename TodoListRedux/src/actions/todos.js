@@ -1,5 +1,10 @@
 
-import { ADD_TODO, SET_TODOS } from './types'
+import { 
+  ADD_TODO, 
+  SET_TODOS,
+  TODOS_LOADING,
+  TODOS_LOADED
+} from './types'
 
 import { items } from '../lib/api'
 
@@ -17,11 +22,27 @@ export const setTodos = (items) => {
   }
 }
 
+export const todosLoading = () => {
+  return {
+    type: TODOS_LOADING
+  }
+}
+
+export const todosLoaded = () => {
+  return {
+    type: TODOS_LOADED
+  }
+}
+
 export const loadTodos = () => {
   return dispatch => {
+    dispatch(todosLoading())
     items('GET')
     .then(items => {
-      dispatch(setTodos(items))
+      setTimeout(() => {
+        dispatch(todosLoaded())
+        dispatch(setTodos(items))
+      }, 1000)
     })    
   }
 }

@@ -1,8 +1,14 @@
 const initialState = {
-  items: []
+  items: [],
+  loading: false
 }
 
-import { ADD_TODO, SET_TODOS } from '../actions/types'
+import { 
+  ADD_TODO, 
+  SET_TODOS,
+  TODOS_LOADING,
+  TODOS_LOADED
+} from '../actions/types'
 
 const todos = (state = initialState, action) => {
   switch(action.type) {
@@ -19,6 +25,18 @@ const todos = (state = initialState, action) => {
       return {
         ...state,
         items: action.items
+      }
+
+    case TODOS_LOADING:
+      return {
+        ...state,
+        loading: true
+      }
+
+    case TODOS_LOADED:
+      return {
+        ...state,
+        loading: false
       }
   }
 

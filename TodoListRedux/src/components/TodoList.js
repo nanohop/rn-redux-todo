@@ -114,7 +114,7 @@ class ToDoList extends Component {
           </View>
 
           {
-            false && <ActivityIndicator 
+            this.props.loading && <ActivityIndicator 
               size="large"
               color="#2288ee"
               style={{ marginTop: 20 }}
@@ -135,6 +135,9 @@ class ToDoList extends Component {
           />
 
           <View style={styles.contentFooter}>
+            <Button onPress={this.props.loadTodos}>
+              <NBText>Refresh</NBText>
+            </Button>
             <Button onPress={this.addItem}>
               <NBText>Add Todo</NBText>
             </Button>
@@ -152,7 +155,8 @@ const mapStateToProps = (state) => {
   return {
     items: todoItems(state),
     completedItems: completedItems(state),
-    uncompletedItems: uncompletedItems(state)
+    uncompletedItems: uncompletedItems(state),
+    loading: state.todos.loading
   }
 }
 
