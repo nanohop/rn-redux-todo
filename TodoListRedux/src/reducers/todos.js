@@ -18,8 +18,26 @@ const initialState = {
   ]
 }
 
+import { ADD_TODO } from '../actions/types'
+
 const todos = (state = initialState, action) => {
-  console.log("Action: ", action)
+  switch(action.type) {
+    case ADD_TODO:
+      const newTask = {
+        id: new Date().getTime(),
+        task: "New Task",
+        completed: false
+      }
+
+      return {
+        ...state,
+        items: [
+          ...state.items,
+          newTask
+        ]
+      }
+  }
+
   return state
 }
 
