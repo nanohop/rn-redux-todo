@@ -44,10 +44,12 @@ class ToDoList extends Component {
   }
 
   addItem = () => {
-    this.props.navigation.navigate(
-      'AddTodo',
-      { saveItem: this.saveItem }
-    )
+    // this.props.navigation.navigate(
+    //   'AddTodo',
+    //   { saveItem: this.saveItem }
+    // )
+    const action = { type: 'ADD_TODO' }
+    this.props.dispatch(action)
   }
 
   saveItem = newTask => {

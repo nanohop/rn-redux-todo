@@ -19,6 +19,7 @@ const initialState = {
 }
 
 const todos = (state = initialState, action) => {
+  console.log("Action: ", action)
   return state
 }
 
