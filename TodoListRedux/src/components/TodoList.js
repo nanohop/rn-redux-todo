@@ -52,7 +52,11 @@ class ToDoList extends Component {
     // )
 
 
-    this.props.addTodo()
+    this.props.addTodo({
+      id: new Date().getTime(),
+      task: "New task from todo list",
+      completed: false
+    })
   }
 
   saveItem = newTask => {

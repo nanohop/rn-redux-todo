@@ -1,8 +1,9 @@
 
 import { ADD_TODO } from './types'
 
-export const addTodo = () => {
+export const addTodo = (task) => {
   return {
-    type: ADD_TODO
+    type: ADD_TODO,
+    task
   }
 }
