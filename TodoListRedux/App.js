@@ -16,11 +16,7 @@ import ToDoList from './src/components/TodoList'
 import About from './src/components/About'
 import AddTodo from './src/components/AddTodo'
 
-const rootReducer = (state = {}, action) => {
-  return state
-}
-
-const store = createStore(rootReducer)
+import rootReducer from './src/reducers'
 
 const TodoNav = StackNavigator({
   TodoList: { screen: ToDoList },
@@ -39,6 +35,9 @@ const TabNav = TabNavigator({
   },
   ...TabNavigator.Presets.iOSBottomTabs
 })
+
+const store = createStore(rootReducer)
+console.log("Store", store.getState())
 
 type Props = {};
 export default class App extends Component<Props> {
