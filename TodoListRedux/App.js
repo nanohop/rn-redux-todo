@@ -37,7 +37,6 @@ const TabNav = TabNavigator({
 })
 
 const store = createStore(rootReducer)
-console.log("Store", store.getState())
 
 type Props = {};
 export default class App extends Component<Props> {

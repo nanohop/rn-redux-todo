@@ -10,13 +10,15 @@ import {
   Platform
 } from 'react-native';
 
+import { connect } from 'react-redux'
+
 import { Button, Text as NBText, Segment } from 'native-base'
 
 import TodoItem from './TodoItem'
 import CheckImage from '../images/check.png'
 import { items } from '../lib/api'
 
-export default class ToDoList extends Component {
+class ToDoList extends Component {
 
   static navigationOptions = {
     header: null,
@@ -71,16 +73,16 @@ export default class ToDoList extends Component {
 
   filteredItems = () => {
     if(this.state.filter === 'Todo') {
-      return this.state.items.filter(i => {
+      return this.props.items.filter(i => {
         return !i.completed
       })
     }
     if(this.state.filter === 'Complete') {
-      return this.state.items.filter(i => {
+      return this.props.items.filter(i => {
         return i.completed
       })
     }
-    return this.state.items
+    return this.props.items
   }
 
   render() {
@@ -154,6 +156,14 @@ export default class ToDoList extends Component {
   }
 
 }
+
+const mapStateToProps = (state) => {
+  return {
+    items: state.todos.items
+  }
+}
+
+export default connect(mapStateToProps)(ToDoList)
 
 const styles = StyleSheet.create({
   container: {
