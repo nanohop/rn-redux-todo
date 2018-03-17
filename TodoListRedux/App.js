@@ -7,11 +7,20 @@ import {
   View
 } from 'react-native';
 
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+
 import { TabNavigator, StackNavigator } from 'react-navigation'
 
 import ToDoList from './src/components/TodoList'
 import About from './src/components/About'
 import AddTodo from './src/components/AddTodo'
+
+const rootReducer = (state = {}, action) => {
+  return state
+}
+
+const store = createStore(rootReducer)
 
 const TodoNav = StackNavigator({
   TodoList: { screen: ToDoList },
@@ -35,7 +44,9 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <TabNav />
+      <Provider store={store}>
+        <TabNav />
+      </Provider>
     );
   }
 }
