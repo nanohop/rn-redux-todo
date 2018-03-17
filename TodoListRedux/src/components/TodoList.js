@@ -52,7 +52,7 @@ class ToDoList extends Component {
     // )
 
 
-    this.props.dispatch(addTodo())
+    this.props.addTodo()
   }
 
   saveItem = newTask => {
@@ -168,7 +168,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(ToDoList)
+export default connect(
+  mapStateToProps, 
+  { addTodo }
+)(ToDoList)
 
 const styles = StyleSheet.create({
   container: {
