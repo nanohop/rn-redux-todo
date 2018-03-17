@@ -1,24 +1,8 @@
 const initialState = {
-  items: [
-    {
-      "id":1,
-      "task":"Learn react",
-      "completed":true
-    },
-    {
-      "id":2,
-      "task":"Learn redux",
-      "completed":false
-    },
-    {
-      "id":3,
-      "task":"Make awesome app",
-      "completed":false
-    }
-  ]
+  items: []
 }
 
-import { ADD_TODO } from '../actions/types'
+import { ADD_TODO, SET_TODOS } from '../actions/types'
 
 const todos = (state = initialState, action) => {
   switch(action.type) {
@@ -29,6 +13,12 @@ const todos = (state = initialState, action) => {
           ...state.items,
           action.task
         ]
+      }
+
+    case SET_TODOS:
+      return {
+        ...state,
+        items: action.items
       }
   }
 

@@ -18,7 +18,7 @@ import TodoItem from './TodoItem'
 import CheckImage from '../images/check.png'
 import { items } from '../lib/api'
 
-import { addTodo } from '../actions/todos'
+import { addTodo, setTodos } from '../actions/todos'
 import { 
   todoItems, 
   completedItems, 
@@ -47,7 +47,7 @@ class ToDoList extends Component {
   componentDidMount() {
     items('GET')
     .then(items => {
-      this.setState({ items })
+      this.props.setTodos(items)
     })
   }
 
@@ -117,7 +117,7 @@ class ToDoList extends Component {
           </View>
 
           {
-            !this.state.items && <ActivityIndicator 
+            false && <ActivityIndicator 
               size="large"
               color="#2288ee"
               style={{ marginTop: 20 }}
@@ -161,7 +161,7 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps, 
-  { addTodo }
+  { addTodo, setTodos }
 )(ToDoList)
 
 const styles = StyleSheet.create({
