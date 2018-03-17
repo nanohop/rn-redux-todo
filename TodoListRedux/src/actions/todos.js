@@ -35,7 +35,15 @@ export const todosLoaded = () => {
 }
 
 export const loadTodos = () => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const state = getState()
+
+    if(state.todos.loading) {
+      console.warn("Already Loading")
+      return;
+    }
+
+    console.warn("Load from server")
     dispatch(todosLoading())
     items('GET')
     .then(items => {
