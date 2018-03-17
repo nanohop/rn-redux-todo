@@ -19,6 +19,12 @@ import CheckImage from '../images/check.png'
 import { items } from '../lib/api'
 
 import { addTodo } from '../actions/todos'
+import { 
+  todoItems, 
+  completedItems, 
+  uncompletedItems 
+} from '../selectors/todos'
+
 
 class ToDoList extends Component {
 
@@ -65,14 +71,10 @@ class ToDoList extends Component {
 
   filteredItems = () => {
     if(this.state.filter === 'Todo') {
-      return this.props.items.filter(i => {
-        return !i.completed
-      })
+      return this.props.uncompletedItems
     }
     if(this.state.filter === 'Complete') {
-      return this.props.items.filter(i => {
-        return i.completed
-      })
+      return this.props.completedItems
     }
     return this.props.items
   }
@@ -151,7 +153,9 @@ class ToDoList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    items: state.todos.items
+    items: todoItems(state),
+    completedItems: completedItems(state),
+    uncompletedItems: uncompletedItems(state)
   }
 }
 

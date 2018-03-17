@@ -10,6 +10,11 @@ import { connect } from 'react-redux'
 
 import AboutImage from '../images/star.png'
 
+import { 
+  completedItems, 
+  uncompletedItems 
+} from '../selectors/todos'
+
 class About extends Component {
 
   static navigationOptions = {
@@ -23,13 +28,8 @@ class About extends Component {
     tabBarLabel: 'About'
   }
   render() {
-    const completedCount = this.props.items.filter(item => {
-      return item.completed
-    }).length
-
-    const uncompletedCount = this.props.items.filter(item => {
-      return !item.completed
-    }).length
+    const completedCount = this.props.completedItems.length
+    const uncompletedCount = this.props.uncompletedItems.length
 
     return (
       <View style={{flex: 1}}>
@@ -58,7 +58,8 @@ class About extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    items: state.todos.items
+    completedItems: completedItems(state),
+    uncompletedItems: uncompletedItems(state)
   }
 }
 
