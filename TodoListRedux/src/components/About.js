@@ -6,9 +6,11 @@ import {
   StyleSheet
 } from 'react-native';
 
+import { connect } from 'react-redux'
+
 import AboutImage from '../images/star.png'
 
-export default class About extends Component {
+class About extends Component {
 
   static navigationOptions = {
     header: null,
@@ -21,6 +23,14 @@ export default class About extends Component {
     tabBarLabel: 'About'
   }
   render() {
+    const completedCount = this.props.items.filter(item => {
+      return item.completed
+    }).length
+
+    const uncompletedCount = this.props.items.filter(item => {
+      return !item.completed
+    }).length
+
     return (
       <View style={{flex: 1}}>
 
@@ -29,16 +39,30 @@ export default class About extends Component {
         </Text>
 
         <Text style={styles.text}>
-          About Page
+          You have:
         </Text>
 
-
+        <Text style={styles.text}>
+          {completedCount} completed item{completedCount == 1 ? '' : 's'}
+        </Text>
+        
+        <Text style={styles.text}>
+          {uncompletedCount} uncompleted item{uncompletedCount == 1 ? '' : 's'}
+        </Text>
 
       </View>
     )
   }
 
 }
+
+const mapStateToProps = (state) => {
+  return {
+    items: state.todos.items
+  }
+}
+
+export default connect(mapStateToProps)(About)
 
 const styles = StyleSheet.create({
   icon: {
