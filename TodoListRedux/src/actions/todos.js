@@ -1,6 +1,5 @@
 
 import { 
-  ADD_TODO, 
   SET_TODOS,
   TODOS_LOADING,
   TODOS_LOADED
@@ -9,9 +8,29 @@ import {
 import { items } from '../lib/api'
 
 export const addTodo = (task) => {
-  return {
-    type: ADD_TODO,
-    task
+  return dispatch => {
+    items('POST', { task })
+    .then(items => {
+      dispatch(setTodos(items))
+    })
+  }
+}
+
+export const toggleTodo = (id, completed) => {
+  return dispatch => {
+    items('PUT', { id, completed })
+    .then(items => {
+      dispatch(setTodos(items))
+    })
+  }
+}
+
+export const deleteTodo = (id) => {
+  return dispatch => {
+    items('DELETE', { id })
+    .then(items => {
+      dispatch(setTodos(items))
+    })
   }
 }
 
@@ -47,10 +66,8 @@ export const loadTodos = () => {
     dispatch(todosLoading())
     items('GET')
     .then(items => {
-      setTimeout(() => {
-        dispatch(todosLoaded())
-        dispatch(setTodos(items))
-      }, 1000)
+      dispatch(todosLoaded())
+      dispatch(setTodos(items))
     })    
   }
 }

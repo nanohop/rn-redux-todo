@@ -20,14 +20,8 @@ class AddTodo extends Component {
   }
 
   onAdd = () => {
-    this.props.addTodo({
-      id: new Date().getTime(),
-      task: this.state.task,
-      completed: false
-    })
-
-    const nav = this.props.navigation
-    nav.goBack()
+    this.props.addTodo(this.state.task)
+    this.props.navigation.goBack()
   }
 
   render() {

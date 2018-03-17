@@ -18,7 +18,13 @@ import TodoItem from './TodoItem'
 import CheckImage from '../images/check.png'
 import { items } from '../lib/api'
 
-import { addTodo, loadTodos } from '../actions/todos'
+import { 
+  addTodo, 
+  loadTodos,
+  toggleTodo,
+  deleteTodo
+} from '../actions/todos'
+
 import { 
   todoItems, 
   completedItems, 
@@ -50,20 +56,6 @@ class ToDoList extends Component {
 
   addItem = () => {
     this.props.navigation.navigate('AddTodo')
-  }
-
-  updateTodo = (id, completed) => {
-    items('PUT', { id, completed })
-    .then(json => {
-      this.setState({ items: json })
-    })
-  }
-
-  deleteTodo = (id) => {
-    items('DELETE', { id })
-    .then(json => {
-      this.setState({ items: json })
-    })
   }
 
   filteredItems = () => {
@@ -127,17 +119,14 @@ class ToDoList extends Component {
             renderItem={row => {
               return <TodoItem 
                 item={row.item} 
-                updateTodo={this.updateTodo}
-                deleteTodo={this.deleteTodo}
+                updateTodo={this.props.toggleTodo}
+                deleteTodo={this.props.deleteTodo}
               />
             }}
             keyExtractor={item => item.id.toString()}
           />
 
           <View style={styles.contentFooter}>
-            <Button onPress={this.props.loadTodos}>
-              <NBText>Refresh</NBText>
-            </Button>
             <Button onPress={this.addItem}>
               <NBText>Add Todo</NBText>
             </Button>
@@ -162,7 +151,12 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps, 
-  { addTodo, loadTodos }
+  { 
+    addTodo, 
+    loadTodos,
+    toggleTodo,
+    deleteTodo
+  }
 )(ToDoList)
 
 const styles = StyleSheet.create({
