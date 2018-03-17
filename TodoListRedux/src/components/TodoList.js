@@ -18,6 +18,8 @@ import TodoItem from './TodoItem'
 import CheckImage from '../images/check.png'
 import { items } from '../lib/api'
 
+import { addTodo } from '../actions/todos'
+
 class ToDoList extends Component {
 
   static navigationOptions = {
@@ -48,8 +50,9 @@ class ToDoList extends Component {
     //   'AddTodo',
     //   { saveItem: this.saveItem }
     // )
-    const action = { type: 'ADD_TODO' }
-    this.props.dispatch(action)
+
+
+    this.props.dispatch(addTodo())
   }
 
   saveItem = newTask => {
