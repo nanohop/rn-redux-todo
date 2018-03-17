@@ -2,7 +2,7 @@
 import { Platform } from 'react-native'
 
 export const items = (method, body) => {
-  const ipAddr = Platform.OS === 'android' ? '[YOUR IP]' : 'localhost'
+  const ipAddr = Platform.OS === 'android' ? '[YOUR IP ADDRESS]' : 'localhost'
 
   const headers = new Headers()
   headers.append('Accept', 'application/json')

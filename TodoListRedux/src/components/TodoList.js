@@ -6,7 +6,8 @@ import {
   FlatList,
   StatusBar,
   ActivityIndicator,
-  Image
+  Image,
+  Platform
 } from 'react-native';
 
 import { Button, Text as NBText, Segment } from 'native-base'
@@ -95,9 +96,9 @@ export default class ToDoList extends Component {
         <View style={styles.contentWrapper}>
 
           <View style={styles.contentHeader}>
-            <Segment>
+            <Segment style={styles.segment}>
               <Button 
-                first 
+                first={Platform.OS === 'ios'}
                 active={this.state.filter === 'All'}
                 onPress={() => this.setState({ filter: 'All' })}
               >
@@ -110,7 +111,7 @@ export default class ToDoList extends Component {
                 <NBText>Todo</NBText>
               </Button>
               <Button 
-                last 
+                last={Platform.OS === 'ios'}
                 active={this.state.filter === 'Complete'}
                 onPress={() => this.setState({ filter: 'Complete' })}
               >
@@ -158,6 +159,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
+  },
+  segment: {
+    flex: 1, 
+    padding: 5
   },
   header: {
     padding: 10,
