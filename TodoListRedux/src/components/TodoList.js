@@ -18,7 +18,7 @@ import TodoItem from './TodoItem'
 import CheckImage from '../images/check.png'
 import { items } from '../lib/api'
 
-import { addTodo, setTodos } from '../actions/todos'
+import { addTodo, loadTodos } from '../actions/todos'
 import { 
   todoItems, 
   completedItems, 
@@ -45,10 +45,7 @@ class ToDoList extends Component {
   }
 
   componentDidMount() {
-    items('GET')
-    .then(items => {
-      this.props.setTodos(items)
-    })
+    this.props.loadTodos()
   }
 
   addItem = () => {
@@ -161,7 +158,7 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps, 
-  { addTodo, setTodos }
+  { addTodo, loadTodos }
 )(ToDoList)
 
 const styles = StyleSheet.create({

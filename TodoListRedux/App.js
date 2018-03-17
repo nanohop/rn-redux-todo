@@ -8,7 +8,9 @@ import {
 } from 'react-native';
 
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+
+import thunk from 'redux-thunk'
 
 import { TabNavigator, StackNavigator } from 'react-navigation'
 
@@ -36,7 +38,10 @@ const TabNav = TabNavigator({
   ...TabNavigator.Presets.iOSBottomTabs
 })
 
-const store = createStore(rootReducer)
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunk)
+)
 
 type Props = {};
 export default class App extends Component<Props> {
