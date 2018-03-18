@@ -27,6 +27,8 @@ import {
   showError
 } from '../actions/todos'
 
+import { login } from '../actions/auth'
+
 import { 
   todoItems, 
   completedItems, 
@@ -148,6 +150,12 @@ class ToDoList extends Component {
           />
 
           <View style={styles.contentFooter}>
+            <Button onPress={() => {
+              this.props.login(null)
+            }}>
+              <NBText>Logout</NBText>
+            </Button>
+
             <Button onPress={this.addItem}>
               <NBText>Add Todo</NBText>
             </Button>
@@ -178,7 +186,8 @@ export default connect(
     loadTodos,
     toggleTodo,
     deleteTodo,
-    showError
+    showError,
+    login
   }
 )(ToDoList)
 

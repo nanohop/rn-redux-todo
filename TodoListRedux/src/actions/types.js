@@ -8,3 +8,5 @@ export const TODOS_LOADED = 'TODOS_LOADED'
 export const TODO_ERROR = 'TODO_ERROR'
 
 export const TODO_VALIDATION_ERROR = 'TODO_VALIDATION_ERROR'
+
+export const LOGIN = 'LOGIN'

@@ -8,8 +8,11 @@ import {
   TouchableOpacity
 } from 'react-native'
 
+import { connect } from 'react-redux'
 
-export default class Login extends Component {
+import { login } from '../actions/auth'
+
+class Login extends Component {
   state = {
     username: ''
   }
@@ -28,7 +31,12 @@ export default class Login extends Component {
           />
         </View>
         <View style={styles.inputRow}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity 
+            style={styles.button}
+            onPress={() => {
+              this.props.login(this.state.username)
+            }}
+          >
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
         </View>
@@ -36,6 +44,8 @@ export default class Login extends Component {
     )
   }
 }
+
+export default connect(undefined, { login })(Login)
 
 const styles = StyleSheet.create({
   container: {
