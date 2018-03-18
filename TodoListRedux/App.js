@@ -38,9 +38,25 @@ const TabNav = TabNavigator({
   ...TabNavigator.Presets.iOSBottomTabs
 })
 
+const reduxLogger = store => {
+  return next => {
+    return action => {
+      console.log("== New Action ==")
+      console.log("Store before: ", store.getState())
+      console.log("Dispatching action: ", action)
+      const result = next(action)
+      console.log("Store after: ", store.getState())
+      return result
+    }
+  }
+}
+
 const store = createStore(
   rootReducer,
-  applyMiddleware(thunk)
+  applyMiddleware(
+    thunk,
+    reduxLogger
+  )
 )
 
 type Props = {};
