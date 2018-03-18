@@ -7,7 +7,7 @@ import {
   View
 } from 'react-native';
 
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 
 import thunk from 'redux-thunk'
@@ -17,6 +17,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 import ToDoList from './src/components/TodoList'
 import About from './src/components/About'
 import AddTodo from './src/components/AddTodo'
+import Login from './src/components/Login'
 
 import rootReducer from './src/reducers'
 
@@ -41,11 +42,7 @@ const TabNav = TabNavigator({
 const reduxLogger = store => {
   return next => {
     return action => {
-      console.log("== New Action ==")
-      console.log("Store before: ", store.getState())
-      console.log("Dispatching action: ", action)
       const result = next(action)
-      console.log("Store after: ", store.getState())
       return result
     }
   }
@@ -59,12 +56,27 @@ const store = createStore(
   )
 )
 
+class LoginGate extends Component {
+  render() {
+    if(this.props.username) {
+      return <TabNav />
+    } else {
+      return <Login />
+    }
+  }
+}
+
+const ConnectedLoginGate = connect(state => ({
+  username: state.auth.username
+}))(LoginGate)
+
+
 type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
       <Provider store={store}>
-        <TabNav />
+        <ConnectedLoginGate />
       </Provider>
     );
   }
